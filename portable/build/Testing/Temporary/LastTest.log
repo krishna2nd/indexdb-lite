@@ -1,0 +1,86 @@
+Start testing: Dec 06 13:12 IST
+----------------------------------------------------------
+1/5 Testing: EncodingTest
+1/5 Test: EncodingTest
+Command: "/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/encoding_test"
+Directory: /home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build
+"EncodingTest" start time: Dec 06 13:12 IST
+Output:
+----------------------------------------------------------
+raw buffer bytes: 5 0 0 0 0 0 0 0 68 65 6c 6c 6f 3 0 0 0 0 0 0 0 0 1 2
+decoded string='hello' size=5
+decoded binary size=3 bytes: 0 1 2
+All encoding tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"EncodingTest" end time: Dec 06 13:12 IST
+"EncodingTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/5 Testing: SortableKeyTest
+2/5 Test: SortableKeyTest
+Command: "/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/sortable_key_test"
+Directory: /home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build
+"SortableKeyTest" start time: Dec 06 13:12 IST
+Output:
+----------------------------------------------------------
+Sortable key round-trip tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"SortableKeyTest" end time: Dec 06 13:12 IST
+"SortableKeyTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/5 Testing: DatabaseTest
+3/5 Test: DatabaseTest
+Command: "/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/database_test"
+Directory: /home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build
+"DatabaseTest" start time: Dec 06 13:12 IST
+Output:
+----------------------------------------------------------
+Database tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"DatabaseTest" end time: Dec 06 13:12 IST
+"DatabaseTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/5 Testing: KeyspaceTest
+4/5 Test: KeyspaceTest
+Command: "/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/keyspace_test"
+Directory: /home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build
+"KeyspaceTest" start time: Dec 06 13:12 IST
+Output:
+----------------------------------------------------------
+Keyspace tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"KeyspaceTest" end time: Dec 06 13:12 IST
+"KeyspaceTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/5 Testing: IntegrationTest
+5/5 Test: IntegrationTest
+Command: "/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/integration_test"
+Directory: /home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build
+"IntegrationTest" start time: Dec 06 13:12 IST
+Output:
+----------------------------------------------------------
+Integration tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"IntegrationTest" end time: Dec 06 13:12 IST
+"IntegrationTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Dec 06 13:12 IST

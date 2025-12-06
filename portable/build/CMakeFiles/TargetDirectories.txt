@@ -1,0 +1,14 @@
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/local_indexed_db.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/encoding_test.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/sortable_key_test.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/database_test.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/keyspace_test.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/integration_test.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/example.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/test.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/edit_cache.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/rebuild_cache.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/list_install_components.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/install.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/install/local.dir
+/home/krishna/MyProjects/index-db/src-refs_heads_main-content-browser-indexed_db/portable/build/CMakeFiles/install/strip.dir

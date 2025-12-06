@@ -1,0 +1,6 @@
+EncodingTest 2 0.00631312
+SortableKeyTest 2 0.00488984
+DatabaseTest 2 0.00387597
+KeyspaceTest 2 0.00470442
+IntegrationTest 2 0.00438688
+---

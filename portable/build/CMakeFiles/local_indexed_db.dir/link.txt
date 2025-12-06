@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblocal_indexed_db.a CMakeFiles/local_indexed_db.dir/encoding/src/encoding.cc.o CMakeFiles/local_indexed_db.dir/storage/src/in_memory_storage.cc.o CMakeFiles/local_indexed_db.dir/core/src/database.cc.o CMakeFiles/local_indexed_db.dir/core/src/transaction.cc.o CMakeFiles/local_indexed_db.dir/core/src/cursor.cc.o CMakeFiles/local_indexed_db.dir/keyspace/src/keyspace.cc.o CMakeFiles/local_indexed_db.dir/blob/src/blob.cc.o CMakeFiles/local_indexed_db.dir/migration/src/migration.cc.o
+/usr/bin/ranlib liblocal_indexed_db.a

@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/encoding_test.dir/link.d CMakeFiles/encoding_test.dir/encoding/tests/encoding_test.cpp.o -o encoding_test  liblocal_indexed_db.a

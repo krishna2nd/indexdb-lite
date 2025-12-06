@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/integration_test.dir/link.d CMakeFiles/integration_test.dir/core/tests/integration_test.cpp.o -o integration_test  liblocal_indexed_db.a

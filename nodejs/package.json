@@ -1,0 +1,30 @@
+{
+  "name": "local-indexed-db",
+  "version": "1.0.0",
+  "description": "Node.js binding for portable Local Indexed DB library",
+  "main": "lib/index.js",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build",
+    "clean": "node-gyp clean",
+    "test": "mocha test/*.test.js"
+  },
+  "keywords": [
+    "indexeddb",
+    "database",
+    "storage",
+    "local",
+    "key-value"
+  ],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "nan": "^2.18.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "node-gyp": "^9.4.0"
+  },
+  "gypfile": true
+}
