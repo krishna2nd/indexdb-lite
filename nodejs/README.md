@@ -2,6 +2,30 @@
 
 A fast, efficient Node.js binding for the Local Indexed DB C++ library. Store and retrieve data with IndexedDB semantics using native performance.
 
+## Architecture (visual)
+
+```mermaid
+flowchart LR
+  subgraph JS [JavaScript Layer]
+    A[App] --> B[`lib/index.js`]
+  end
+  subgraph Native [Native Layer]
+    B --> C[`local_indexed_db_native.node`]
+    C --> D[Portable C++ Library]
+  end
+  subgraph Storage [Storage]
+    D -->|abstracts| E{IStorage}
+    E --> F[InMemoryStorage]
+    E --> G[File-backed (demo: file_db.js)]
+    E --> H[LevelDB/RocksDB (prod)]
+  end
+  style JS fill:#f3f9ff,stroke:#0366d6
+  style Native fill:#fff6f0,stroke:#d73a49
+  style Storage fill:#f0fff4,stroke:#22863a
+```
+
+*(Diagram: put/get flow between JS, native addon, C++ library and storage)*
+
 ## Installation
 
 ### From source
