@@ -1,155 +1,182 @@
+# local-indexed-db (Node.js Binding)
 
+> ✅ **Published to npm as `indexdb-lite`** - [View on npm](https://www.npmjs.com/package/indexdb-lite)
 
-# IndexedDB
+A fast, efficient Node.js binding for the Local Indexed DB C++ library. Store and retrieve data with IndexedDB semantics using native performance.
 
-## Status
-Note - this document is incomplete & under construction.
+## Installation
 
-Currently this terminology in NOT reflected in the codebase yet.
+### From npm (recommended)
 
-## Common Terminology
-### (IndexedDB) Backing Store
-The backing store represents all IndexedDB data for an origin. This includes
-all IndexedDB databases for that origin. A backing store has a dedicated
-leveldb database where all data for that origin is stored.
-### LevelDB Database
-A leveldb database represents a leveldatabase database. Each backing store has
-a unique leveldb database, located at:
-`IndexedDB/<serialized_origin>.leveldb/`
+```bash
+npm install indexdb-lite
+```
 
-### IndexedDB Database
-An IndexedDB database represents a database in the IndexedDB API. The backing
-store can contain many IndexedDB  databases. So a single LevelDB database has
-multiple IndexedDB databases.
+### From source
 
-IndexedDB databases are identified by a unique auto-incrementing `int64_t`
-`database_id`.
+```bash
+git clone https://github.com/krishna2nd/indexdb-lite.git
+cd nodejs
+npm install
+npm run build
+```
 
-## Blob Storage
-Blob are supported in IndexedDB to allow large values to be stored in IndexedDB
-without needing to save them directly into leveldb (which doesn't work well
-with large values). Blobs are a special type of "External Object", i.e. objects
-where some other subsystem in chrome is involved in managing them.
+### Requirements
 
+- Node.js 12.0.0 or higher
+- Python 3.6+ (for node-gyp)
+- C++17 compatible compiler (GCC 7+, Clang 5+)
 
-### Blob States
-Blob can be in the following states:
+## Quick Start
 
-#### _Linked_ vs _Unlinked_
-A **linked** blob is a blob that has a saved reference in the database by a
-BlobEntryKey. If a blob has been deleted from the database, or if it has not
-been written yet, it is **unlinked**.
+```javascript
+const { Database, IDBKey, Encoding, Status } = require('indexdb-lite');
 
-#### _Persisted_ vs _Pending_
-A **persisted** blob is stored on disk in the IndexedDB system. A **pending**
-blob is backed by an external client, and has not been stored on disk in the
-IndexedDB system.
+// Create a database
+const db = new Database();
 
-When the database is in in-memory or 'incognito' mode, blobs are never written
-to disk. This means they always stay **pending**.
+// Store values
+db.put('key1', 'value1');
+db.put('user:123', JSON.stringify({ name: 'Alice', age: 30 }));
 
-#### _Active_ vs _Inactive_
-An **active** blob has an active reference in some client. An **inactive** blob
-has no client references.
+// Retrieve values
+const result = db.get('key1');
+if (Database.isOk(result)) {
+  console.log('Found:', result.value);
+} else if (Database.isNotFound(result)) {
+  console.log('Key not found');
+}
 
-#### State combinations, on-disk
+// Atomic batch operations
+const batch = [
+  ['key1', 'new_value'],
+  ['key2', 'another_value'],
+  ['key3', null]  // null = delete
+];
+db.commitBatch(batch);
 
-|               | **Linked** | **Unlinked** |
-| ------------: | :--------: | :----------: |
-| **Persisted** | ✓          | Active: ✓ Inactive: 🛇<br>(well, ✓ but deleted soon) |
-| **Pending**   | 🛇          | ✓            |
+// Delete a key
+db.delete('key1');
+```
 
-#### State combinations, in-memory (incognito)
-Blobs are never persisted to disk in incognito mode.
+## API
 
-|               | **Linked** | **Unlinked** |
-| ------------: | :--------: | :----------: |
-| **Persisted** | 🛇          | 🛇          |
-| **Pending**   | ✓          | ✓            |
+### Database
 
-#### State Flow Diagram, on-disk
+#### `new Database()`
 
-![Blob state diagram](BlobStateDiagram.png)
-### Blob Terminology
-#### Blob Number
-A blob number is a `int64_t` number that is unique and auto-incrementing per
-database in an origin. This is used to uniquely identify a blob in an IndexedDB
-database.
+Create a new in-memory database instance.
 
-#### Blob Key
-A blob key is a `int64_t` `database_id` and a unique auto-incrementing
-`int64_t` `blob_number`. The database metadata contains a
-`BlobNumberGeneratorCurrentNumber` which is used to save the next blob key number
-to use.
+```javascript
+const db = new Database();
+```
 
-A blob key uniquely identifies a blob in an backing store.
+#### `put(key, value) -> number`
 
-####  Blob File
-A blob file is the physical file stored on disk that represents a **persisted**
-blob. It resides in the following directory:
-`IndexedDB/<serialized_origin>.blob/<database_id>/<blob_number>`
-Note that `database_id` + `blob_number` is a unique blob key.
+Store a key-value pair. Returns status code (0 = OK).
 
-A blob that has been **persisted** in the database is stored in a blob file.
-This file is deleted when the blob is **unlinked** and **inactive**.
-(Technically this is done by adding the corresponding blob key is added to the
-recovery journal, which is processed every once in a while to delete unused
-files).
+```javascript
+const status = db.put('mykey', 'myvalue');
+```
 
-There is a 1:1 mapping between a blob file and a blob key.
+- [Local Indexed DB (C++ Library)](../portable/)
+````markdown
+# local-indexed-db (Node.js Binding)
 
-#### Blob Handle
-This is-a `storage::BlobDataHandle` OR a `blink::BlobDataHandle` OR a
-`mojo::Remote<storage::mojom::Blob>`.
+> ✅ **Published to npm as `indexdb-lite`** - [View on npm](https://www.npmjs.com/package/indexdb-lite)
 
-Blob handles basically hold a reference to the given blob, which allows
-IndexedDB (or a client) to keep the blob alive and/or read the blob.
+A fast, efficient Node.js binding for the Local Indexed DB C++ library. The npm package includes a small JavaScript wrapper plus a `portable/` folder that contains headers and prebuilt portable artifacts (when available) so downstream native integrations can link or consume headers without requiring a full source build.
 
-#### Blob Info
-A  blob info is one version of-a
-[IndexedDBExternalObject](../indexed_db_external_object.h), and
-basically contains all of the information needed to read a blob. This means it
-has a blob handle if it is a **pending** blob, and/or the file information if
-it is a **persisted** blob.
+## Installation
 
-If the blob handle is present, that means this holds a reference to that blob
-and keeps it alive in the blob system.
+### From npm (recommended)
 
-#### Blob Entry
-A blob entry contains a vector of blob infos that are **persisted** in the
-database. All of these blob infos, at least initially, do not have a blob
-handle, and only contain the blob key & blob file information (like size, type,
-time modified, etc).
+```bash
+npm install indexdb-lite@1.0.2
+```
 
-A Blob Entry is a value that is saved into the database using a `BlobEntryKey`:
+The package ships with a `portable/` directory that contains the C++ headers and (when present) prebuilt static libraries under `portable/build/`. This makes it convenient for consumers who need the library headers or wish to build native components that link against the portable artifacts.
 
-#### `BlobEntryKey`
-A `BlobEntryKey` is used as a key in the leveldb database and contains the
-`database_id`, `object_store_id`, and `user_object_store_data_key`. A
-`BlobEntryKey` can be used to look up a blob entry in the database for the
-given object store data key.
+### From source
 
-#### Recovery Journal
-The recovery journal is a list of blob keys that are pending deletion. These
-blob keys represent blobs that are in an **unlinked**, **inactive**, and
-**persisted** state.
+```bash
+git clone https://github.com/krishna2nd/indexdb-lite.git
+cd nodejs
+npm install
+# If you want to build the native binding from sources (optional)
+npm run build
+```
 
-This is used to maintain consistency if a crash occurs or if there is an error
-while committing a transaction. The recovery journal is "processed"
-intermittently when there isn't an active transaction. Processing means that
-every blob file referenced in the journal (by the blob key) is deleted, and the
-journal is cleared.
+### Requirements (only for building from source)
 
-The recovery journal is where all blob keys that are to-be-deleted by a
-transaction are placed. (They are subsequently immediately deleted after the
-transaction is committed, but this can fail / crash so they are placed in the
-journal first).
+- Node.js 14.0.0 or higher
+- Python 3.6+ (for node-gyp)
+- C++17 compatible compiler (GCC 7+, Clang 5+)
 
-#### Active Journal
-This is used to keep track of all blobs that are in an  **unlinked**,
-**active**, and **persisted** state. Blobs are added to this journal during the
-second phase of an IndexedDB transaction's commit, and contains blobs that are
-referenced by clients that would have otherwise been deleted (well, added to
-the recovery journal) by the transaction. When the a client stops using the
-given blob, then the key is added to the recovery journal and removed from the
-active journal.
+## Quick Start (Node.js)
+
+```javascript
+const { Database, IDBKey, Encoding, Status } = require('indexdb-lite');
+
+// Create a database instance
+const db = new Database();
+
+// Store values
+db.put('key1', 'value1');
+
+// Retrieve values
+const result = db.get('key1');
+if (Database.isOk(result)) {
+  console.log('Found:', result.value);
+}
+```
+
+If you prefer a complete runnable example, see `nodejs/examples/example-company-db-npm.js`. That script demonstrates storing departments and employees in a single on-disk database file, then performing correlation queries (employee -> department and department -> employees). The example will use the published native binding if available, or a small JS fallback when the native addon is not present.
+
+## Included Files (high-level)
+
+- `lib/` - JS wrapper that talks to the native addon
+- `index.d.ts` - Basic TypeScript type hints
+- `portable/` - C++ headers and prebuilt portable artifacts (headers under `portable/include/`, static libs under `portable/build/` when present)
+- `examples/` - Usage examples including `example-company-db-npm.js`
+
+## Examples
+
+Run the example that demonstrates employees <> departments correlations:
+
+```bash
+node examples/example-company-db-npm.js
+```
+
+This will create a small DB file at `nodejs/data/npm_company.db` when run with the fallback JS store. When the native binding is present, behavior will follow the native implementation.
+
+## Testing
+
+```bash
+npm test
+```
+
+## Building (optional)
+
+```bash
+npm run build     # Build native module (if you need the native binding)
+npm run clean     # Clean build artifacts
+```
+
+## Notes
+
+- The npm package includes prebuilt portable artifacts to simplify integration. If you need to build against the C++ sources directly, check `portable/` and the examples in `portable/`.
+- If you plan to publish a downstream native module that links to the portable library, use the headers under `portable/include/` and the static library under `portable/build/`.
+
+## License
+
+BSD-3-Clause
+
+## References
+
+- [Local Indexed DB (C++ Library)](../portable/)
+- [IndexedDB W3C Spec](https://w3c.github.io/IndexedDB/)
+
+````
+Utilities for encoding/decoding keys.
+
