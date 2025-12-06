@@ -1,0 +1,94 @@
+{
+  "employees": {
+    "EMP001": {
+      "id": "EMP001",
+      "name": "John Doe",
+      "email": "john@company.com",
+      "phone": "555-0001",
+      "position": "Senior Engineer",
+      "salary": 120000,
+      "joinDate": "2020-01-15",
+      "departmentId": "DEPT001"
+    },
+    "EMP002": {
+      "id": "EMP002",
+      "name": "Jane Smith",
+      "email": "jane@company.com",
+      "phone": "555-0002",
+      "position": "Engineer",
+      "salary": 95000,
+      "joinDate": "2021-03-20",
+      "departmentId": "DEPT001"
+    },
+    "EMP003": {
+      "id": "EMP003",
+      "name": "Mike Johnson",
+      "email": "mike@company.com",
+      "phone": "555-0003",
+      "position": "Sales Manager",
+      "salary": 85000,
+      "joinDate": "2019-06-10",
+      "departmentId": "DEPT002"
+    },
+    "EMP004": {
+      "id": "EMP004",
+      "name": "Sarah Davis",
+      "email": "sarah@company.com",
+      "phone": "555-0004",
+      "position": "Senior Sales Rep",
+      "salary": 72000,
+      "joinDate": "2022-01-05",
+      "departmentId": "DEPT002"
+    },
+    "EMP005": {
+      "id": "EMP005",
+      "name": "Tom Wilson",
+      "email": "tom@company.com",
+      "phone": "555-0005",
+      "position": "HR Manager",
+      "salary": 75000,
+      "joinDate": "2018-09-12",
+      "departmentId": "DEPT003"
+    },
+    "EMP007": {
+      "id": "EMP007",
+      "name": "Chris Martinez",
+      "email": "chris@company.com",
+      "phone": "555-0007",
+      "position": "Mid-Level Engineer",
+      "salary": 95000,
+      "joinDate": "2023-02-15",
+      "departmentId": "DEPT001"
+    }
+  },
+  "departments": {
+    "DEPT001": {
+      "id": "DEPT001",
+      "name": "Engineering",
+      "head": "Alice Johnson",
+      "budget": 500000,
+      "location": "Building A"
+    },
+    "DEPT002": {
+      "id": "DEPT002",
+      "name": "Sales",
+      "head": "Bob Smith",
+      "budget": 300000,
+      "location": "Building B"
+    },
+    "DEPT003": {
+      "id": "DEPT003",
+      "name": "HR",
+      "head": "Carol Williams",
+      "budget": 150000,
+      "location": "Building C"
+    },
+    "DEPT004": {
+      "id": "DEPT004",
+      "name": "Finance",
+      "head": "David Brown",
+      "budget": 200000,
+      "location": "Building D"
+    }
+  }
+}

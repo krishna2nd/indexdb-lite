@@ -1,0 +1,13 @@
+{
+  "departments:DEPT001": "{\"id\":\"DEPT001\",\"name\":\"Engineering\",\"head\":\"Alice Johnson\",\"budget\":500000}",
+  "departments:DEPT002": "{\"id\":\"DEPT002\",\"name\":\"Sales\",\"head\":\"Bob Smith\",\"budget\":300000}",
+  "departments:DEPT003": "{\"id\":\"DEPT003\",\"name\":\"HR\",\"head\":\"Carol Williams\",\"budget\":150000}",
+  "departments:DEPT004": "{\"id\":\"DEPT004\",\"name\":\"Finance\",\"head\":\"David Brown\",\"budget\":200000}",
+  "employees:EMP001": "{\"id\":\"EMP001\",\"name\":\"John Doe\",\"salary\":120000,\"position\":\"Senior Engineer\",\"departmentId\":\"DEPT001\"}",
+  "employees:EMP002": "{\"id\":\"EMP002\",\"name\":\"Jane Smith\",\"salary\":95000,\"position\":\"Engineer\",\"departmentId\":\"DEPT001\"}",
+  "employees:EMP003": "{\"id\":\"EMP003\",\"name\":\"Mike Johnson\",\"salary\":80000,\"position\":\"Engineer\",\"departmentId\":\"DEPT001\"}",
+  "employees:EMP004": "{\"id\":\"EMP004\",\"name\":\"Sarah Davis\",\"salary\":70000,\"position\":\"Sales Rep\",\"departmentId\":\"DEPT002\"}",
+  "employees:EMP005": "{\"id\":\"EMP005\",\"name\":\"Tom Clark\",\"salary\":75000,\"position\":\"HR Specialist\",\"departmentId\":\"DEPT003\"}",
+  "employees:EMP006": "{\"id\":\"EMP006\",\"name\":\"Lisa Anderson\",\"salary\":68000,\"position\":\"Accountant\",\"departmentId\":\"DEPT004\"}",
+  "__manifest__": "{\"departments\":[\"DEPT001\",\"DEPT002\",\"DEPT003\",\"DEPT004\"],\"employees\":[\"EMP001\",\"EMP002\",\"EMP003\",\"EMP004\",\"EMP005\",\"EMP006\"]}"
+}

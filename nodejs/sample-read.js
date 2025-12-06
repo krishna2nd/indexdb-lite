@@ -1,4 +1,4 @@
-const FileDB = require('./file_db');
+const FileDB = require('./examples/file_db');
 
 const db = new FileDB('sample-index.db');
 

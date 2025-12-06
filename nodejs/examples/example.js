@@ -1,6 +1,6 @@
 // Simple example demonstrating local-indexed-db Node.js binding
 
-const { Database, IDBKey, Encoding, Status } = require('./lib/index');
+const { Database, IDBKey, Encoding, Status } = require('../lib/index');
 
 console.log('=== Local Indexed DB Node.js Example ===\n');
 
