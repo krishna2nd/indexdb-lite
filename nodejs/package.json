@@ -1,31 +1,52 @@
 {
-  "name": "local-indexed-db",
-  "version": "1.0.0",
-  "description": "Node.js binding for portable Local Indexed DB library",
+  "name": "indexdb-lite",
+  "version": "1.0.2",
+  "description": "Fast, portable IndexedDB implementation for Node.js with native C++ backend",
   "main": "lib/index.js",
   "types": "index.d.ts",
   "scripts": {
-    "install": "node-gyp rebuild",
-    "build": "node-gyp build",
-    "clean": "node-gyp clean",
     "test": "mocha test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krishna2nd/indexdb-lite.git"
+  },
+  "homepage": "https://github.com/krishna2nd/indexdb-lite#readme",
+  "bugs": {
+    "url": "https://github.com/krishna2nd/indexdb-lite/issues"
   },
   "keywords": [
     "indexeddb",
     "database",
     "storage",
     "local",
-    "key-value"
+    "key-value",
+    "portable",
+    "native",
+    "c++",
+    "cache"
   ],
-  "author": "",
+  "author": "krishna2nd",
   "license": "BSD-3-Clause",
-  "dependencies": {
-    "nan": "^2.18.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "^10.2.0",
-    "chai": "^4.3.10",
-    "node-gyp": "^9.4.0"
+    "chai": "^4.3.10"
   },
-  "gypfile": true
+  "gypfile": false,
+  "files": [
+    "lib/",
+    "src/",
+    "portable/",
+    "binding.gyp",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

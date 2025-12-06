@@ -1,39 +1,21 @@
 # local-indexed-db (Node.js Binding)
 
+> ✅ **Published to npm as `indexdb-lite`** - [View on npm](https://www.npmjs.com/package/indexdb-lite)
+
 A fast, efficient Node.js binding for the Local Indexed DB C++ library. Store and retrieve data with IndexedDB semantics using native performance.
 
-## Architecture (visual)
-
-```mermaid
-flowchart LR
-  subgraph JS [JavaScript Layer]
-    A[App] --> B[`lib/index.js`]
-  end
-  subgraph Native [Native Layer]
-    B --> C[`local_indexed_db_native.node`]
-    C --> D[Portable C++ Library]
-  end
-  subgraph Storage [Storage]
-    D -->|abstracts| E{IStorage}
-    E --> F[InMemoryStorage]
-    E --> G[File-backed (demo: file_db.js)]
-    E --> H[LevelDB/RocksDB (prod)]
-  end
-  style JS fill:#f3f9ff,stroke:#0366d6
-  style Native fill:#fff6f0,stroke:#d73a49
-  style Storage fill:#f0fff4,stroke:#22863a
-```
-
-*(Diagram: put/get flow between JS, native addon, C++ library and storage)*
-
 ## Installation
+
+### From npm (recommended)
+
+```bash
+npm install indexdb-lite
+```
 
 ### From source
 
 ```bash
-npm install local-indexed-db
-# or
-git clone <repo>
+git clone https://github.com/krishna2nd/indexdb-lite.git
 cd nodejs
 npm install
 npm run build
@@ -48,7 +30,7 @@ npm run build
 ## Quick Start
 
 ```javascript
-const { Database, IDBKey, Encoding, Status } = require('local-indexed-db');
+const { Database, IDBKey, Encoding, Status } = require('indexdb-lite');
 
 // Create a database
 const db = new Database();
@@ -97,203 +79,76 @@ Store a key-value pair. Returns status code (0 = OK).
 const status = db.put('mykey', 'myvalue');
 ```
 
-#### `get(key) -> Object`
+- [Local Indexed DB (C++ Library)](../portable/)
+````markdown
+# local-indexed-db (Node.js Binding)
 
-Retrieve a value by key. Returns `{status, value}`.
+> ✅ **Published to npm as `indexdb-lite`** - [View on npm](https://www.npmjs.com/package/indexdb-lite)
+
+A fast, efficient Node.js binding for the Local Indexed DB C++ library. The npm package includes a small JavaScript wrapper plus a `portable/` folder that contains headers and prebuilt portable artifacts (when available) so downstream native integrations can link or consume headers without requiring a full source build.
+
+## Installation
+
+### From npm (recommended)
+
+```bash
+npm install indexdb-lite@1.0.2
+```
+
+The package ships with a `portable/` directory that contains the C++ headers and (when present) prebuilt static libraries under `portable/build/`. This makes it convenient for consumers who need the library headers or wish to build native components that link against the portable artifacts.
+
+### From source
+
+```bash
+git clone https://github.com/krishna2nd/indexdb-lite.git
+cd nodejs
+npm install
+# If you want to build the native binding from sources (optional)
+npm run build
+```
+
+### Requirements (only for building from source)
+
+- Node.js 14.0.0 or higher
+- Python 3.6+ (for node-gyp)
+- C++17 compatible compiler (GCC 7+, Clang 5+)
+
+## Quick Start (Node.js)
 
 ```javascript
-const result = db.get('mykey');
+const { Database, IDBKey, Encoding, Status } = require('indexdb-lite');
+
+// Create a database instance
+const db = new Database();
+
+// Store values
+db.put('key1', 'value1');
+
+// Retrieve values
+const result = db.get('key1');
 if (Database.isOk(result)) {
-  console.log(result.value);
+  console.log('Found:', result.value);
 }
 ```
 
-Status codes:
-- `Status.OK` (0): Success
-- `Status.NOT_FOUND` (1): Key doesn't exist
-- `Status.ERROR` (2): Error occurred
+If you prefer a complete runnable example, see `nodejs/examples/example-company-db-npm.js`. That script demonstrates storing departments and employees in a single on-disk database file, then performing correlation queries (employee -> department and department -> employees). The example will use the published native binding if available, or a small JS fallback when the native addon is not present.
 
-#### `delete(key) -> number`
+## Included Files (high-level)
 
-Delete a key-value pair. Returns status code.
-
-```javascript
-db.delete('mykey');
-```
-
-#### `commitBatch(batch) -> number`
-
-Commit multiple operations atomically.
-
-```javascript
-const batch = [
-  ['key1', 'value1'],
-  ['key2', 'value2'],
-  ['key3', null]  // delete
-];
-db.commitBatch(batch);
-```
-
-#### `Database.isOk(result) -> boolean`
-
-Check if a get() result is successful.
-
-```javascript
-if (Database.isOk(db.get('key'))) { /* ... */ }
-```
-
-#### `Database.isNotFound(result) -> boolean`
-
-Check if a get() result indicates key not found.
-
-```javascript
-if (Database.isNotFound(db.get('key'))) { /* ... */ }
-```
-
-### IDBKey
-
-Utilities for working with IndexedDB key types.
-
-#### `new IDBKey(value)`
-
-Create a key from a value. Automatically detects type (number, string, array, etc.).
-
-```javascript
-const numKey = new IDBKey(42);
-const strKey = new IDBKey('abc');
-const arrKey = new IDBKey([1, 'two', null]);
-```
-
-#### `IDBKey.null()`
-
-Create a null key.
-
-```javascript
-const nullKey = IDBKey.null();
-```
-
-#### `IDBKey.date(ms)`
-
-Create a date key (stored as milliseconds since epoch).
-
-```javascript
-const dateKey = IDBKey.date(Date.now());
-```
-
-#### Key Types
-
-```javascript
-IDBKey.TYPES = {
-  INVALID: 0,
-  NULL: 1,
-  NUMBER: 2,
-  DATE: 3,
-  STRING: 4,
-  BINARY: 5,
-  ARRAY: 6
-};
-```
-
-### Encoding
-
-Utilities for encoding/decoding keys.
-
-#### `Encoding.encodeKey(key) -> Buffer`
-
-Encode an IDBKey to a buffer.
-
-```javascript
-const key = new IDBKey('test');
-const encoded = Encoding.encodeKey(key);
-```
-
-#### `Encoding.decodeKey(buffer) -> IDBKey`
-
-Decode a buffer back to an IDBKey.
-
-```javascript
-const decoded = Encoding.decodeKey(encoded);
-```
+- `lib/` - JS wrapper that talks to the native addon
+- `index.d.ts` - Basic TypeScript type hints
+- `portable/` - C++ headers and prebuilt portable artifacts (headers under `portable/include/`, static libs under `portable/build/` when present)
+- `examples/` - Usage examples including `example-company-db-npm.js`
 
 ## Examples
 
-### JSON Documents
+Run the example that demonstrates employees <> departments correlations:
 
-```javascript
-const db = new Database();
-
-const user = { id: 1, name: 'Alice', email: 'alice@example.com' };
-db.put('user:1', JSON.stringify(user));
-
-const result = db.get('user:1');
-const userData = JSON.parse(result.value);
-console.log(userData.name);
+```bash
+node examples/example-company-db-npm.js
 ```
 
-### Numeric Keys
-
-```javascript
-const db = new Database();
-
-// Store with numeric keys
-const scores = [
-  ['score:100', 'player1'],
-  ['score:95', 'player2'],
-  ['score:88', 'player3']
-];
-
-db.commitBatch(scores);
-
-// Retrieve
-const result = db.get('score:100');
-console.log(result.value);  // 'player1'
-```
-
-### Key Prefixes
-
-```javascript
-const db = new Database();
-
-// Use prefixes for hierarchical storage
-db.put('users:123:profile', '...');
-db.put('users:123:settings', '...');
-db.put('users:456:profile', '...');
-
-// Retrieve user data
-const profile = db.get('users:123:profile');
-const settings = db.get('users:123:settings');
-```
-
-### Transactions with Error Handling
-
-```javascript
-const db = new Database();
-
-function transferFunds(from, to, amount) {
-  const fromResult = db.get(`account:${from}:balance`);
-  const toResult = db.get(`account:${to}:balance`);
-
-  if (!Database.isOk(fromResult) || !Database.isOk(toResult)) {
-    console.error('Account not found');
-    return false;
-  }
-
-  const fromBalance = parseFloat(fromResult.value);
-  const toBalance = parseFloat(toResult.value);
-
-  if (fromBalance < amount) {
-    console.error('Insufficient funds');
-    return false;
-  }
-
-  const batch = [
-    [`account:${from}:balance`, String(fromBalance - amount)],
-    [`account:${to}:balance`, String(toBalance + amount)]
-  ];
-
-  return db.commitBatch(batch) === Status.OK;
-}
-```
+This will create a small DB file at `nodejs/data/npm_company.db` when run with the fallback JS store. When the native binding is present, behavior will follow the native implementation.
 
 ## Testing
 
@@ -301,41 +156,26 @@ function transferFunds(from, to, amount) {
 npm test
 ```
 
-Run tests with verbose output:
+## Building (optional)
 
 ```bash
-npm test -- --reporter spec
-```
-
-## Building
-
-```bash
-npm run build     # Build native module
+npm run build     # Build native module (if you need the native binding)
 npm run clean     # Clean build artifacts
 ```
 
-## Performance Notes
+## Notes
 
-- All operations are synchronous (blocking).
-- The native C++ backend provides fast key-value operations.
-- Batch commits are atomic but single-threaded.
-- In-memory storage is suitable for testing and caching; for persistent storage, implement a file-backed `IStorage` backend in C++.
-
-## Future Enhancements
-
-- [ ] Async/Promise API
-- [ ] Persistent file-backed storage
-- [ ] LevelDB backend option
-- [ ] SQLite backend option
-- [ ] Cursor/range iteration support
-- [ ] Transaction API
-- [ ] Blob support
+- The npm package includes prebuilt portable artifacts to simplify integration. If you need to build against the C++ sources directly, check `portable/` and the examples in `portable/`.
+- If you plan to publish a downstream native module that links to the portable library, use the headers under `portable/include/` and the static library under `portable/build/`.
 
 ## License
 
-BSD-3-Clause (compatible with Chromium source)
+BSD-3-Clause
 
 ## References
 
 - [Local Indexed DB (C++ Library)](../portable/)
 - [IndexedDB W3C Spec](https://w3c.github.io/IndexedDB/)
+
+````
+Utilities for encoding/decoding keys.

@@ -1,0 +1,62 @@
+# Development and build files
+node_modules/
+build/
+*.o
+*.a
+*.so
+*.dylib
+*.node
+
+# Test and documentation
+test/
+docs/
+*.test.js
+mocha.opts
+
+# Git and CI
+.git/
+.gitignore
+.github/
+.travis.yml
+.gitlab-ci.yml
+appveyor.yml
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+.env
+
+# Exclude only internal VCS and large example builds; keep headers and build artifacts for publishing
+portable/.git/
+portable/examples/
+
+# Additional development files
+example-*.js
+data/
+.env.local
+
+# Sample files
+sample-*.js
+sample-*.db
+
+# Build files
+binding.gyp
+src/
+CMakeLists.txt
+cmake/
+.gyp/
+.node-gyp/
+
+# npm/yarn
+.npmrc
+yarn.lock
+npm-debug.log
+yarn-error.log
+
+# Misc
+.eslintrc
+.prettierrc
+tsconfig.json
